@@ -4,13 +4,13 @@ import { getAuth } from "firebase/auth"; // Para autenticação
 
 // Configuração do Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyCuZF1y9mSTfW6oRo0UAZ-SDnE4dUkQKZk",
-  authDomain: "aplicativo-magnata.firebaseapp.com",
-  projectId: "aplicativo-magnata",
-  storageBucket: "aplicativo-magnata.firebasestorage.app",
-  messagingSenderId: "1036873396258",
-  appId: "1:1036873396258:web:4997f5a56c75158db55a7b",
-  measurementId: "G-8LGZBWZYWY"
+  apiKey: "AIzaSyAy3lnmXY4rt5fRLHvh0emvqqbjKiddckI",
+  authDomain: "gerador-turbo-shot.firebaseapp.com",
+  projectId: "gerador-turbo-shot",
+  storageBucket: "gerador-turbo-shot.firebasestorage.app",
+  messagingSenderId: "961554334939",
+  appId: "1:961554334939:web:8f383bfc4952133f94f8fe",
+  measurementId: "G-2DKCFTCRGG"
 };
 
 // Inicializa o Firebase
