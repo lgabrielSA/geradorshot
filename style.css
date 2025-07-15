@@ -133,15 +133,15 @@ h1 {
 }
 
 .cor-azul {
-  color: #000000;
-  text-shadow: 0 0 6px rgba(80, 20, 20, 0.7); /* sombra mais forte e neutra para combinar com vermelho e preto */
+  color: #000000; /* preto puro */
+  text-shadow: 0 0 6px rgba(60, 60, 60, 0.8); /* sombra neutra forte */
 }
 
 .porcentagem {
   font-size: 1rem;
   font-weight: 400;
   color: #ccc;
-  text-shadow: 0 0 6px rgba(80, 20, 20, 0.7); /* mesma sombra da cor-azul */
+  text-shadow: 0 0 6px rgba(60, 60, 60, 0.8); /* mesma sombra que o nome */
   margin-top: 6px;
   opacity: 0;
   transform: translateY(10px);
@@ -223,6 +223,8 @@ button:hover:not(:disabled) {
     font-size: 1.2rem;
   }
 
+  /* REMOVIDO ajuste da logo para manter o tamanho do desktop */
+
   button {
     padding: 12px 20px;
     font-size: 1rem;
@@ -244,6 +246,8 @@ button:hover:not(:disabled) {
   h1 {
     font-size: 1.4rem;
   }
+
+  /* REMOVIDO ajuste da logo para manter o tamanho do desktop */
 
   button {
     font-size: 0.95rem;
