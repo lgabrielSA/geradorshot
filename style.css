@@ -60,9 +60,7 @@ h1 {
 }
 
 .logo-inicial img {
-  max-width: 100%;
-  height: auto;
-  width: auto;
+  max-width: 550px;
   opacity: 0.3;
   user-select: none;
   display: block;
@@ -135,15 +133,15 @@ h1 {
 }
 
 .cor-azul {
-  color: #000000;
-  text-shadow: 0 0 6px rgba(80, 20, 20, 0.5); /* sombra que combina com os dois */
+  color: #000000; /* preto puro */
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.3); /* sombra mais discreta */
 }
 
 .porcentagem {
   font-size: 1rem;
   font-weight: 400;
   color: #ccc;
-  text-shadow: 0 0 6px rgba(80, 20, 20, 0.5); /* sombra unificada */
+  text-shadow: 0 0 6px rgba(60, 60, 60, 0.8);
   margin-top: 6px;
   opacity: 0;
   transform: translateY(10px);
@@ -225,9 +223,8 @@ button:hover:not(:disabled) {
     font-size: 1.2rem;
   }
 
-  /* Mantemos o tamanho da logo igual ao desktop */
   .logo-inicial img {
-    max-width: 550px;
+    max-width: 140px;
   }
 
   button {
@@ -253,7 +250,7 @@ button:hover:not(:disabled) {
   }
 
   .logo-inicial img {
-    max-width: 550px;
+    max-width: 120px;
   }
 
   button {
