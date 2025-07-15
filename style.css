@@ -133,15 +133,15 @@ h1 {
 }
 
 .cor-azul {
-  color: #000000; /* preto puro */
-  text-shadow: 0 0 2px rgba(0, 0, 0, 0.3); /* sombra mais discreta */
+  color: #000000;
+  text-shadow: 0 0 6px rgba(80, 20, 20, 0.7); /* sombra mais forte e neutra para combinar com vermelho e preto */
 }
 
 .porcentagem {
   font-size: 1rem;
   font-weight: 400;
   color: #ccc;
-  text-shadow: 0 0 6px rgba(60, 60, 60, 0.8);
+  text-shadow: 0 0 6px rgba(80, 20, 20, 0.7); /* mesma sombra da cor-azul */
   margin-top: 6px;
   opacity: 0;
   transform: translateY(10px);
@@ -223,10 +223,6 @@ button:hover:not(:disabled) {
     font-size: 1.2rem;
   }
 
-  .logo-inicial img {
-    max-width: 140px;
-  }
-
   button {
     padding: 12px 20px;
     font-size: 1rem;
@@ -247,10 +243,6 @@ button:hover:not(:disabled) {
 @media (max-width: 400px) {
   h1 {
     font-size: 1.4rem;
-  }
-
-  .logo-inicial img {
-    max-width: 120px;
   }
 
   button {
