@@ -61,6 +61,7 @@ h1 {
 
 .logo-inicial img {
   max-width: 550px;
+  height: auto;
   opacity: 0.3;
   user-select: none;
   display: block;
