@@ -1,15 +1,40 @@
-
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>BacBo Análise</title>
-<link href="style.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&amp;display=swap" rel="stylesheet"/>
-<script crossorigin="anonymous" src="https://kit.fontawesome.com/a076d05399.js"></script>
-<style>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>BacBo Análise</title>
+  <link href="style.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet"/>
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAy3lnmXY4rt5fRLHvh0emvqqbjKiddckI",
+      authDomain: "gerador-turbo-shot.firebaseapp.com",
+      projectId: "gerador-turbo-shot",
+      storageBucket: "gerador-turbo-shot.appspot.com",
+      messagingSenderId: "961554334939",
+      appId: "1:961554334939:web:8f383bfc4952133f94f8fe",
+      measurementId: "G-2DKCFTCRGG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Proteger acesso
+    onAuthStateChanged(auth, user => {
+      if (!user) {
+        window.location.href = "login.html"; // redireciona se não estiver logado
+      }
+    });
+  </script>
+
+  <style>
     .disabled {
       opacity: 0.6;
       pointer-events: none;
@@ -39,41 +64,44 @@
 </head>
 <body>
 <div class="container">
-<header style="text-align: center; margin-bottom: 20px;">
-<p class="greeting">Olá, 123</p>
-<div class="stats">
-<div class="stat-box">
-<p>Taxa de Acerto</p>
-<strong id="nivel-acerto">-</strong>
+  <header style="text-align: center; margin-bottom: 20px;">
+    <p class="greeting">Olá, usuário logado</p>
+    <div class="stats">
+      <div class="stat-box">
+        <p>Taxa de Acerto</p>
+        <strong id="nivel-acerto">-</strong>
+      </div>
+      <div class="stat-box">
+        <p>Análises</p>
+        <strong>1.227</strong>
+      </div>
+    </div>
+  </header>
+
+  <main style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <div id="resultado-analise">
+      <p style="color:#888; text-align:center; margin:3px 0;">Nenhuma análise ainda...</p>
+    </div>
+    <div class="analysis-box">
+      <button class="btn-analisar" id="btn-analisar" onclick="iniciarAnalise();" style="background: linear-gradient(90deg, #ffa500, #ff00ff); border-radius: 15px; padding: 0.9rem 1.7rem; color: black; font-size: 1.1rem; box-shadow: 0 0 15px #ff00ff80; cursor: pointer;"><i class="fas fa-search"></i> Gerar Análise</button>
+      <p id="timer-msg"></p>
+    </div>
+    <div class="ultimo-padrao">
+      <p class="detected-title">⚡ Último Padrão Detectado</p>
+      <span class="sequence">Sequência Shot identificada há 2 min</span>
+      <div class="bolinhas"></div>
+    </div>
+  </main>
+
+  <footer style="display: flex; justify-content: space-around; padding: 1rem; border-top: 2px solid #333; background-color: #1a1a1a;">
+    <nav>
+      <button class="active"><i class="fas fa-home"></i><br/>Início</button>
+      <button><i class="fas fa-chart-line"></i><br/>Análises</button>
+      <button><i class="fas fa-headset"></i><br/>Suporte</button>
+    </nav>
+  </footer>
 </div>
-<div class="stat-box">
-<p>Análises</p>
-<strong>1.227</strong>
-</div>
-</div>
-</header>
-<main style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-<div id="resultado-analise">
-<p style="color:#888; text-align:center; margin:3px 0;">Nenhuma análise ainda...</p>
-</div>
-<div class="analysis-box">
-<button class="btn-analisar" id="btn-analisar" onclick="iniciarAnalise();" style="background: linear-gradient(90deg, #ffa500, #ff00ff); border-radius: 15px; padding: 0.9rem 1.7rem; color: black; font-size: 1.1rem; box-shadow: 0 0 15px #ff00ff80; cursor: pointer;"><i class="fas fa-search"></i> Gerar Análise</button>
-<p id="timer-msg"></p>
-</div>
-<div class="ultimo-padrao">
-<p class="detected-title">⚡ Último Padrão Detectado</p>
-<span class="sequence">Sequência Shot identificada há 2 min</span>
-<div class="bolinhas"></div>
-</div>
-</main>
-<footer style="display: flex; justify-content: space-around; padding: 1rem; border-top: 2px solid #333; background-color: #1a1a1a;">
-<nav>
-<button class="active"><i class="fas fa-home"></i><br/>Início</button>
-<button><i class="fas fa-chart-line"></i><br/>Análises</button>
-<button><i class="fas fa-headset"></i><br/>Suporte</button>
-</nav>
-</footer>
-</div>
+
 <script>
   let bloqueado = false;
   let tempoRestante = 60;
@@ -104,16 +132,6 @@
 
     resultado.innerHTML = `<div class="analise-box">Analisando plataforma...</div>`;
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAy3lnmXY4rt5fRLHvh0emvqqbjKiddckI",
-      authDomain: "gerador-turbo-shot.firebaseapp.com",
-      projectId: "gerador-turbo-shot",
-      storageBucket: "gerador-turbo-shot.firebasestorage.app",
-      messagingSenderId: "961554334939",
-      appId: "1:961554334939:web:8f383bfc4952133f94f8fe",
-      measurementId: "G-2DKCFTCRGG"
-    };
-    
     setTimeout(() => {
       const dataBrasilia = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
       const corEscolhida = Math.random() < 0.5 ? 'VERMELHO' : 'PRETO';
