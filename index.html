@@ -1,53 +1,172 @@
+
 <!DOCTYPE html>
-<html lang="pt-br">
+
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gerador Turbo ⚡</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet"/>
-  <link href="style.css" rel="stylesheet"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BacBo Análise</title>
+<link href="style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&amp;display=swap" rel="stylesheet"/>
+<script crossorigin="anonymous" src="https://kit.fontawesome.com/a076d05399.js"></script>
+<style>
+    .disabled {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    #resultado-analise {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+    .analysis-box {
+      margin-top: 5px;
+      text-align: center;
+      padding: 8px;
+    }
+    #timer-msg {
+      color: #ff4444;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    .ultimo-padrao {
+      margin-top: 10px;
+    }
+    .ultimo-padrao p,
+    .ultimo-padrao span {
+      margin: 3px 0;
+    }
+  </style>
 </head>
-<body style="visibility: hidden;">
-  <div class="card">
-    <h1>Gerador Turbo ⚡</h1>
-    <div class="logo-inicial" id="resultado">
-      <img alt="Logo Magnata" src="imagens/Logo Shot.png"/>
-    </div>
-    <button id="btnGerar" onclick="gerarEntrada()">Gerar</button>
-  </div>
+<body>
+<div class="container">
+<header style="text-align: center; margin-bottom: 20px;">
+<p class="greeting">Olá, 123</p>
+<div class="stats">
+<div class="stat-box">
+<p>Taxa de Acerto</p>
+<strong id="nivel-acerto">-</strong>
+</div>
+<div class="stat-box">
+<p>Análises</p>
+<strong>1.227</strong>
+</div>
+</div>
+</header>
+<main style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+<div id="resultado-analise">
+<p style="color:#888; text-align:center; margin:3px 0;">Nenhuma análise ainda...</p>
+</div>
+<div class="analysis-box">
+<button class="btn-analisar" id="btn-analisar" onclick="iniciarAnalise();" style="background: linear-gradient(90deg, #ffa500, #ff00ff); border-radius: 15px; padding: 0.9rem 1.7rem; color: black; font-size: 1.1rem; box-shadow: 0 0 15px #ff00ff80; cursor: pointer;"><i class="fas fa-search"></i> Gerar Análise</button>
+<p id="timer-msg"></p>
+</div>
+<div class="ultimo-padrao">
+<p class="detected-title">⚡ Último Padrão Detectado</p>
+<span class="sequence">Sequência Shot identificada há 2 min</span>
+<div class="bolinhas"></div>
+</div>
+</main>
+<footer style="display: flex; justify-content: space-around; padding: 1rem; border-top: 2px solid #333; background-color: #1a1a1a;">
+<nav>
+<button class="active"><i class="fas fa-home"></i><br/>Início</button>
+<button><i class="fas fa-chart-line"></i><br/>Análises</button>
+<button><i class="fas fa-headset"></i><br/>Suporte</button>
+</nav>
+</footer>
+</div>
+<script>
+  let bloqueado = false;
+  let tempoRestante = 60;
+  let intervalo;
 
-  <!-- Seu script de lógica principal -->
-  <script src="script.js"></script>
+  function iniciarAnalise() {
+    if (bloqueado) return;
 
-  <!-- Script de autenticação -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+    const btn = document.getElementById('btn-analisar');
+    const msg = document.getElementById('timer-msg');
+    const resultado = document.getElementById('resultado-analise');
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAy3lnmXY4rt5fRLHvh0emvqqbjKiddckI",
-      authDomain: "gerador-turbo-shot.firebaseapp.com",
-      projectId: "gerador-turbo-shot",
-      storageBucket: "gerador-turbo-shot.firebasestorage.app",
-      messagingSenderId: "961554334939",
-      appId: "1:961554334939:web:8f383bfc4952133f94f8fe",
-      measurementId: "G-2DKCFTCRGG"
-    };
+    bloqueado = true;
+    btn.classList.add('disabled');
+    msg.textContent = `Aguarde ${tempoRestante}s`;
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    console.log("[Index] Verificando se o usuário está autenticado...");
-
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        console.warn("[Index] Usuário não autenticado. Redirecionando...");
-        window.location.href = "login.html";
-      } else {
-        console.log("[Index] Usuário autenticado:", user.email);
-        document.body.style.visibility = "visible";
+    intervalo = setInterval(() => {
+      tempoRestante--;
+      msg.textContent = `Aguarde ${tempoRestante}s`;
+      if (tempoRestante <= 0) {
+        clearInterval(intervalo);
+        msg.textContent = '';
+        btn.classList.remove('disabled');
+        bloqueado = false;
+        tempoRestante = 60;
       }
+    }, 1000);
+
+    resultado.innerHTML = `<div class="analise-box">Analisando plataforma...</div>`;
+
+    setTimeout(() => {
+      const dataBrasilia = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+      const corEscolhida = Math.random() < 0.5 ? 'VERMELHO' : 'PRETO';
+      const corHex = corEscolhida === 'VERMELHO' ? '#ff4444' : '#000';
+
+      resultado.innerHTML = `
+        <div class="analise-box">
+          Análise Concluída<br>
+          Resultado gerado em ${dataBrasilia}
+        </div>
+        <div class="analise-detalhada" style="background:#000; padding:1rem; border-radius:15px; border:1px solid #0ff; margin-top:8px;">
+          <h2 style="color:#00ffff; text-align:center; margin-bottom:0.5rem;">
+            🖥️ Inteligência Artificial Ativada 🖥️
+          </h2>
+          <div style="display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+            <div style="flex:1; min-width:100px; background:#111; padding:0.8rem; border-radius:10px; text-align:center;">
+              <p style="color:#0ff; font-weight:bold; margin:0;">GALES</p>
+              <p style="color:#0f0; font-size:0.9rem;">SEM GALE OU G1<br>(OPCIONAL)</p>
+            </div>
+            <div style="flex:1; min-width:100px; background:#111; padding:0.8rem; border-radius:10px; text-align:center;">
+              <p style="color:#0ff; font-weight:bold; margin:0;">APOSTE NO</p>
+              <div style="width:30px; height:30px; margin:0.5rem auto; border-radius:50%; background:${corHex};"></div>
+              <p style="color:${corHex}; font-weight:bold;">${corEscolhida}</p>
+            </div>
+            <div style="flex:1; min-width:100px; background:#111; padding:0.8rem; border-radius:10px; text-align:center;">
+              <p style="color:#0ff; font-weight:bold; margin:0;">ENTRADA</p>
+              <p style="color:#0ff; font-size:0.9rem;">ENTRE NA PRÓXIMA<br>RODADA!</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }, 3000);
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const niveis = [
+      { texto: 'Baixo', cor: '#ff4444' },
+      { texto: 'Médio', cor: '#ffdc00' },
+      { texto: 'Alto', cor: '#00ff88' }
+    ];
+    const escolhido = niveis[Math.floor(Math.random() * niveis.length)];
+    const taxaEl = document.getElementById('nivel-acerto');
+    taxaEl.textContent = escolhido.texto;
+    taxaEl.style.color = escolhido.cor;
+
+    const ciclos = [
+      ['red', 'red', 'black', 'red'],
+      ['black', 'black', 'red', 'black'],
+      ['red', 'black', 'red', 'black'],
+      ['black', 'red', 'black', 'red'],
+      ['red', 'red', 'red', 'black'],
+      ['black', 'black', 'black', 'red']
+    ];
+    const cicloEscolhido = ciclos[Math.floor(Math.random() * ciclos.length)];
+    const containerBolinhas = document.querySelector('.bolinhas');
+    containerBolinhas.innerHTML = '';
+
+    cicloEscolhido.forEach(cor => {
+      const bola = document.createElement('span');
+      bola.classList.add(cor + '-dot');
+      containerBolinhas.appendChild(bola);
     });
-  </script>
+  });
+</script>
 </body>
 </html>
