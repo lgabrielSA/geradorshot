@@ -104,6 +104,16 @@
 
     resultado.innerHTML = `<div class="analise-box">Analisando plataforma...</div>`;
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyAy3lnmXY4rt5fRLHvh0emvqqbjKiddckI",
+      authDomain: "gerador-turbo-shot.firebaseapp.com",
+      projectId: "gerador-turbo-shot",
+      storageBucket: "gerador-turbo-shot.firebasestorage.app",
+      messagingSenderId: "961554334939",
+      appId: "1:961554334939:web:8f383bfc4952133f94f8fe",
+      measurementId: "G-2DKCFTCRGG"
+    };
+    
     setTimeout(() => {
       const dataBrasilia = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
       const corEscolhida = Math.random() < 0.5 ? 'VERMELHO' : 'PRETO';
